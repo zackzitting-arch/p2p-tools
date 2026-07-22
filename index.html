@@ -1,0 +1,481 @@
+<title>The Stack — Tools Zack Zitting Actually Uses</title>
+
+<!--
+  ============================================================
+  EDIT ONLY THE LINKS BLOCK BELOW. Nothing else needs touching.
+  Paste each affiliate URL between the quotes as you get approved.
+  Leave a link as "" and the card automatically shows a muted
+  "Link coming soon" state instead of a dead button.
+  ============================================================
+-->
+<script>
+  const LINKS = {
+    whop:       "https://whop.com/network/?a=zackzz32",
+    ghl:        "",
+    make:       "",
+    elevenlabs: "",
+    claude:     "https://claude.com/product/claude-code",
+    canva:      "",
+    capcut:     "",
+    namecheap:  ""
+  };
+</script>
+
+<style>
+  /* Single committed light theme — matches casestudies.post2profitsagency.com.
+     Do NOT add a prefers-color-scheme dark block; it washes out the copy. */
+  :root {
+    color-scheme: light;
+
+    --paper:        #e7f0f7;
+    --card:         #ffffff;
+    --ink:          #05192b;
+    --muted:        #2f4f64;
+    --faint:        #4d6d80;
+    --rule:         #cbdded;
+    --rule-strong:  #adc7d8;
+    --cyan:         #0cc0df;
+    --cyan-ink:     #067d94;
+    --navy:         #005996;
+    --deep:         #04263f;
+    --deep-2:       #0a4a73;
+    --on-deep:      #eaf6fb;
+    --on-deep-mute: #bfdcea;
+    --good:         #0a7f58;
+
+    --display: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    --mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+
+    --shell: 1080px;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--display);
+    font-size: 17px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+  }
+
+  .shell { max-width: var(--shell); margin: 0 auto; padding: 0 24px; }
+
+  /* ---------- masthead ---------- */
+
+  .masthead {
+    position: sticky; top: 0; z-index: 20;
+    background: rgba(231,240,247,.92);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--rule);
+  }
+  .masthead > .shell {
+    display: flex; align-items: center; gap: 16px; height: 62px;
+  }
+  .wordmark {
+    font-weight: 800; font-size: 16px; letter-spacing: .04em;
+    color: var(--navy); text-decoration: none;
+  }
+  .wordmark em { font-style: normal; color: var(--cyan-ink); }
+
+  .jump { display: flex; gap: 26px; margin-left: auto; }
+  .jump a {
+    font-family: var(--mono); font-size: 12px; letter-spacing: .06em;
+    text-transform: uppercase; color: var(--muted); text-decoration: none;
+    padding: 4px 0; border-bottom: 1px solid transparent;
+    transition: color .15s ease, border-color .15s ease;
+  }
+  .jump a:hover { color: var(--ink); border-bottom-color: var(--cyan); }
+  .jump a:focus-visible { outline: 2px solid var(--cyan); outline-offset: 4px; }
+  @media (max-width: 860px) { .jump { display: none; } }
+
+  html { scroll-behavior: smooth; }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+  section[id] { scroll-margin-top: 74px; }
+
+  /* ---------- shared type ---------- */
+
+  .eyebrow {
+    font-family: var(--mono); font-size: 11.5px; letter-spacing: .14em;
+    text-transform: uppercase; color: var(--cyan-ink); margin: 0 0 14px;
+  }
+  h1 {
+    font-size: clamp(34px, 5.4vw, 54px); line-height: 1.06;
+    letter-spacing: -.02em; margin: 0 0 20px; font-weight: 800;
+  }
+  h2 {
+    font-size: clamp(24px, 3.2vw, 32px); line-height: 1.15;
+    letter-spacing: -.015em; margin: 0 0 10px; font-weight: 800;
+  }
+  .lede { font-size: clamp(17px, 2.1vw, 20px); color: var(--muted); margin: 0; max-width: 60ch; }
+
+  /* ---------- hero ---------- */
+
+  .hero { padding: 72px 0 52px; }
+  .hero .lede { margin-bottom: 26px; }
+  .hero-note {
+    display: inline-flex; align-items: center; gap: 10px;
+    font-size: 14.5px; color: var(--faint);
+    background: var(--card); border: 1px solid var(--rule);
+    border-radius: 999px; padding: 9px 18px;
+  }
+  .hero-note b { color: var(--ink); font-weight: 700; }
+
+  /* ---------- section head ---------- */
+
+  .sec { padding: 46px 0 8px; }
+  .sec-head { margin-bottom: 26px; max-width: 62ch; }
+  .sec-head p { margin: 0; color: var(--muted); }
+
+  /* ---------- cards ---------- */
+
+  .grid {
+    display: grid; gap: 18px;
+    grid-template-columns: repeat(auto-fit, minmax(310px, 1fr));
+  }
+
+  .tool {
+    background: var(--card);
+    border: 1px solid var(--rule);
+    border-radius: 16px;
+    padding: 24px;
+    display: flex; flex-direction: column;
+    box-shadow: 0 1px 2px rgba(4,38,63,.04);
+  }
+
+  .tool-top { display: flex; align-items: center; gap: 13px; margin-bottom: 14px; }
+
+  .mark {
+    flex: 0 0 auto; width: 44px; height: 44px; border-radius: 11px;
+    display: grid; place-items: center;
+    font-weight: 800; font-size: 17px; letter-spacing: -.02em;
+    color: #fff; background: linear-gradient(155deg, var(--cyan), var(--navy));
+  }
+
+  .tool-name { font-size: 19px; font-weight: 800; letter-spacing: -.01em; margin: 0; }
+  .tool-kind {
+    font-family: var(--mono); font-size: 11px; letter-spacing: .09em;
+    text-transform: uppercase; color: var(--faint); margin: 2px 0 0;
+  }
+
+  .tool p.what { margin: 0 0 14px; color: var(--muted); font-size: 15.5px; }
+
+  .use {
+    border-left: 3px solid var(--rule-strong);
+    padding: 2px 0 2px 14px; margin: 0 0 18px;
+    font-size: 15px; color: var(--ink);
+  }
+  .use b { color: var(--cyan-ink); }
+
+  .tool-foot { margin-top: auto; display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+
+  .btn {
+    display: inline-block; font-family: var(--display);
+    font-weight: 700; font-size: 15px; line-height: 1;
+    padding: 13px 22px; border-radius: 999px; text-decoration: none;
+    color: #fff; background: linear-gradient(180deg, var(--cyan), var(--navy));
+    box-shadow: 0 6px 18px rgba(12,192,223,.28); border: 0;
+    transition: transform .15s ease, box-shadow .15s ease;
+  }
+  .btn:hover { transform: translateY(-1px); box-shadow: 0 10px 24px rgba(12,192,223,.4); }
+  .btn:focus-visible { outline: 3px solid var(--cyan); outline-offset: 3px; }
+
+  .btn.ghost {
+    background: none; color: var(--navy);
+    border: 1.5px solid var(--rule-strong); box-shadow: none;
+  }
+  .btn.ghost:hover { border-color: var(--cyan); color: var(--cyan-ink); }
+
+  .btn.pending {
+    background: none; color: var(--faint);
+    border: 1.5px dashed var(--rule-strong); box-shadow: none;
+    cursor: default; pointer-events: none;
+  }
+  .btn.pending:hover { transform: none; box-shadow: none; }
+
+  .tag {
+    font-family: var(--mono); font-size: 11px; letter-spacing: .07em;
+    text-transform: uppercase; color: var(--faint);
+  }
+  .tag.paid { color: var(--good); }
+
+  /* ---------- disclosure band ---------- */
+
+  .band {
+    margin: 62px 0 0;
+    background: linear-gradient(160deg, var(--deep), var(--deep-2));
+    color: var(--on-deep);
+  }
+  .band .shell { padding-top: 52px; padding-bottom: 52px; }
+  .band h2 { color: #fff; }
+  .band p { color: var(--on-deep-mute); max-width: 66ch; margin: 0 0 14px; }
+  .band p:last-child { margin-bottom: 0; }
+  .band strong { color: var(--cyan); font-weight: 700; }
+
+  /* ---------- footer ---------- */
+
+  footer { padding: 34px 0 60px; }
+  footer p {
+    margin: 0; font-family: var(--mono); font-size: 12px;
+    letter-spacing: .05em; color: var(--faint);
+  }
+</style>
+
+<header class="masthead">
+  <div class="shell">
+    <a class="wordmark" href="#top">THE <em>STACK</em></a>
+    <nav class="jump">
+      <a href="#run">Run the business</a>
+      <a href="#ai">AI</a>
+      <a href="#make">Make things</a>
+      <a href="#disclosure">Disclosure</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+
+  <section class="hero">
+    <div class="shell">
+      <p class="eyebrow">What I actually use</p>
+      <h1>The software I run my<br>business on. That's the list.</h1>
+      <p class="lede">
+        I get asked what I use about once a day. So here it is — every tool that
+        touches my agency, my clients' campaigns, and my own content. No tools I
+        don't open, no roundups of things I've never paid for.
+      </p>
+      <span class="hero-note">
+        <b>Heads up:</b>&nbsp;some links below pay me a commission. Details at the bottom.
+      </span>
+    </div>
+  </section>
+
+  <!-- ================= RUN THE BUSINESS ================= -->
+  <section class="sec" id="run">
+    <div class="shell">
+      <div class="sec-head">
+        <p class="eyebrow">01 — Run the business</p>
+        <h2>The operating layer</h2>
+        <p>Where leads land, where follow-up happens, and where the money moves. If these three went down, I'd be out of business by lunch.</p>
+      </div>
+
+      <div class="grid">
+
+        <article class="tool">
+          <div class="tool-top">
+            <div class="mark">GHL</div>
+            <div>
+              <p class="tool-name">GoHighLevel</p>
+              <p class="tool-kind">CRM · Funnels · Automation</p>
+            </div>
+          </div>
+          <p class="what">All-in-one CRM, funnel builder, calendar, pipeline, SMS and email automation — sold as a single platform instead of six subscriptions.</p>
+          <p class="use"><b>What I use it for:</b> every client sub-account lives here. Lead capture, speed-to-lead follow-up, booking calendars, and the pipeline I actually manage campaigns out of.</p>
+          <div class="tool-foot">
+            <a class="btn" data-link="ghl" data-label="Start a GHL trial">Start a GHL trial</a>
+            <span class="tag paid">Affiliate link</span>
+          </div>
+        </article>
+
+        <article class="tool">
+          <div class="tool-top">
+            <div class="mark">MK</div>
+            <div>
+              <p class="tool-name">Make.com</p>
+              <p class="tool-kind">Automation · Integrations</p>
+            </div>
+          </div>
+          <p class="what">Visual automation builder. Connects apps that don't natively talk to each other and runs the logic in between them.</p>
+          <p class="use"><b>What I use it for:</b> the glue. New-lead Slack alerts, form-to-CRM routing, reporting pulls, and every internal process I've stopped doing by hand.</p>
+          <div class="tool-foot">
+            <a class="btn" data-link="make" data-label="Try Make free">Try Make free</a>
+            <span class="tag paid">Affiliate link</span>
+          </div>
+        </article>
+
+        <article class="tool">
+          <div class="tool-top">
+            <div class="mark">W</div>
+            <div>
+              <p class="tool-name">Whop</p>
+              <p class="tool-kind">Checkout · Memberships</p>
+            </div>
+          </div>
+          <p class="what">Storefront and checkout for digital products, communities, and memberships — payments, access control, and affiliates handled in one place.</p>
+          <p class="use"><b>What I use it for:</b> selling and delivering digital offers without stitching together a cart, a payment processor, and a members area myself.</p>
+          <div class="tool-foot">
+            <a class="btn" data-link="whop" data-label="Browse Whop">Browse Whop</a>
+            <span class="tag paid">Affiliate link</span>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= AI ================= -->
+  <section class="sec" id="ai">
+    <div class="shell">
+      <div class="sec-head">
+        <p class="eyebrow">02 — AI</p>
+        <h2>The leverage layer</h2>
+        <p>This is the part of the stack that changed the most in the last year. These are the ones that survived past the novelty stage and became daily tools.</p>
+      </div>
+
+      <div class="grid">
+
+        <article class="tool">
+          <div class="tool-top">
+            <div class="mark">C</div>
+            <div>
+              <p class="tool-name">Claude</p>
+              <p class="tool-kind">AI assistant · Agent</p>
+            </div>
+          </div>
+          <p class="what">Anthropic's AI assistant. Claude Code is the version that runs in a terminal and can actually operate your files, scripts, and connected accounts.</p>
+          <p class="use"><b>What I use it for:</b> the single biggest one on this list. Campaign audits, copy drafts, client dossiers, and a set of custom agents that run my ops on a schedule.</p>
+          <div class="tool-foot">
+            <a class="btn ghost" data-link="claude" data-label="See Claude Code">See Claude Code</a>
+            <span class="tag">No affiliate program — I just use it</span>
+          </div>
+        </article>
+
+        <article class="tool">
+          <div class="tool-top">
+            <div class="mark">11</div>
+            <div>
+              <p class="tool-name">ElevenLabs</p>
+              <p class="tool-kind">AI voice · Dubbing</p>
+            </div>
+          </div>
+          <p class="what">AI voice generation and voice cloning. Text to speech that doesn't sound like a GPS unit.</p>
+          <p class="use"><b>What I use it for:</b> voiceover for ad variations and VSL test cuts, so I can hear a script before anyone books a studio day.</p>
+          <div class="tool-foot">
+            <a class="btn" data-link="elevenlabs" data-label="Try ElevenLabs">Try ElevenLabs</a>
+            <span class="tag paid">Affiliate link</span>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= MAKE THINGS ================= -->
+  <section class="sec" id="make">
+    <div class="shell">
+      <div class="sec-head">
+        <p class="eyebrow">03 — Make things</p>
+        <h2>Creative and infrastructure</h2>
+        <p>Everything that turns an idea into an asset that ships — plus the boring plumbing underneath it.</p>
+      </div>
+
+      <div class="grid">
+
+        <article class="tool">
+          <div class="tool-top">
+            <div class="mark">CV</div>
+            <div>
+              <p class="tool-name">Canva</p>
+              <p class="tool-kind">Design · Creative</p>
+            </div>
+          </div>
+          <p class="what">Design tool for people who are not designers. Templates, brand kits, and a resize button that saves hours.</p>
+          <p class="use"><b>What I use it for:</b> static ad creative, offer graphics, and reformatting one asset into every placement size.</p>
+          <div class="tool-foot">
+            <a class="btn" data-link="canva" data-label="Get Canva">Get Canva</a>
+            <span class="tag paid">Affiliate link</span>
+          </div>
+        </article>
+
+        <article class="tool">
+          <div class="tool-top">
+            <div class="mark">CC</div>
+            <div>
+              <p class="tool-name">CapCut</p>
+              <p class="tool-kind">Video editing</p>
+            </div>
+          </div>
+          <p class="what">Fast video editor built for short-form. Captions, hooks, and cuts without opening a full NLE.</p>
+          <p class="use"><b>What I use it for:</b> editing short-form content and cutting ad variations quickly enough to actually test them.</p>
+          <div class="tool-foot">
+            <a class="btn" data-link="capcut" data-label="Get CapCut">Get CapCut</a>
+            <span class="tag paid">Affiliate link</span>
+          </div>
+        </article>
+
+        <article class="tool">
+          <div class="tool-top">
+            <div class="mark">NC</div>
+            <div>
+              <p class="tool-name">Namecheap</p>
+              <p class="tool-kind">Domains · Hosting</p>
+            </div>
+          </div>
+          <p class="what">Domain registrar with pricing that doesn't quadruple at renewal, plus email and hosting if you want it.</p>
+          <p class="use"><b>What I use it for:</b> every domain I register for a funnel, a client campaign, or a project I'm testing.</p>
+          <div class="tool-foot">
+            <a class="btn" data-link="namecheap" data-label="Get a domain">Get a domain</a>
+            <span class="tag paid">Affiliate link</span>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= DISCLOSURE ================= -->
+  <section class="band" id="disclosure">
+    <div class="shell">
+      <p class="eyebrow" style="color:var(--cyan)">Affiliate disclosure</p>
+      <h2>How the links on this page work</h2>
+      <p>
+        Some of the links above are <strong>affiliate links</strong>. If you sign up
+        through one, the company pays me a commission. It does not cost you anything
+        extra, and in some cases the link gets you a better trial or starting offer
+        than going direct.
+      </p>
+      <p>
+        Every tool on this page is one I pay for and use in my own business. I have
+        turned down commissions on tools I don't run, and where a company has
+        <strong>no affiliate program at all</strong> — like Claude — I've listed it
+        anyway and labeled it, because leaving it off would misrepresent the stack.
+      </p>
+      <p>
+        Nothing here is a promise of a result. These are tools, not outcomes. What
+        you get out of them depends entirely on what you do with them.
+      </p>
+    </div>
+  </section>
+
+  <footer>
+    <div class="shell">
+      <p>POST 2 PROFITS · ZACK ZITTING · THE STACK</p>
+    </div>
+  </footer>
+
+</main>
+
+<script>
+  /* Wires each button to the LINKS block at the top of this file.
+     Empty string -> the button becomes a non-clickable "coming soon" chip,
+     so an unfinished affiliate application never ships a dead link. */
+  document.querySelectorAll("[data-link]").forEach(function (el) {
+    var url = (LINKS[el.dataset.link] || "").trim();
+    if (url) {
+      el.setAttribute("href", url);
+      el.setAttribute("target", "_blank");
+      el.setAttribute("rel", "sponsored noopener noreferrer");
+    } else {
+      el.classList.add("pending");
+      el.classList.remove("ghost");
+      el.textContent = "Link coming soon";
+      el.setAttribute("aria-disabled", "true");
+      var tag = el.parentElement.querySelector(".tag");
+      if (tag) { tag.textContent = "Applying to program"; tag.classList.remove("paid"); }
+    }
+  });
+</script>
