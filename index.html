@@ -21,8 +21,11 @@
                gated behind 4 compliance steps + policy acceptance
     make       35% for 12 months         → us2.make.com → avatar → Affiliate program
                needs a Wise payout email + T&C agreement
+    jotform    30% recurring, first year  → https://www.jotform.com/partnership/affiliate/
+               60-day cookie, reviewed in ~1 business day — fastest win here
     gamma      30-50% via PartnerStack   → https://gammaapp.partnerstack.com/?group=affiliates
                reviewed in 5-10 business days, start this one first
+    fathom     20% first year, PartnerStack → https://www.fathom.ai/program/growth-partner
     wispr      25% for 12 months via Dub → https://partners.dub.co/flow
     namecheap  25-38% domains, 120d cookie → https://www.namecheap.com/affiliates/
     whop       DONE — affiliate link already live
@@ -34,6 +37,8 @@
     whop:      { url: "https://whop.com/network/?a=zackzz32", affiliate: true  },
     ghl:       { url: "https://www.gohighlevel.com/",         affiliate: false },
     make:      { url: "https://www.make.com/",                affiliate: false },
+    jotform:   { url: "https://www.jotform.com/",             affiliate: false },
+    fathom:    { url: "https://fathom.video/",                affiliate: false },
     gamma:     { url: "https://gamma.app/",                   affiliate: false },
     wispr:     { url: "https://wisprflow.ai/",                affiliate: false },
     namecheap: { url: "https://www.namecheap.com/",           affiliate: false },
@@ -264,8 +269,9 @@
       <h1>The software I run my<br>business on. That's the list.</h1>
       <p class="lede">
         I get asked what I use about once a day. So here it is — every tool that
-        touches my agency, my clients' campaigns, and my own content. Seven of them.
-        No tools I don't open, no roundup of things I've never paid for.
+        touches my agency, my clients' campaigns, and my own content.
+        <span id="tool-count">Nine</span> of them. No tools I don't open, no roundup
+        of things I've never paid for.
       </p>
       <span class="hero-note">
         <b>Heads up:</b>&nbsp;some links below pay me a commission. Details at the bottom.
@@ -313,6 +319,38 @@
           <div class="tool-foot">
             <a class="btn" data-link="make" data-label="Try Make free">Try Make free</a>
             <span class="tag paid">Affiliate link</span>
+          </div>
+        </article>
+
+        <article class="tool">
+          <div class="tool-top">
+            <div class="mark">JF</div>
+            <div>
+              <p class="tool-name">Jotform</p>
+              <p class="tool-kind">Forms · Intake</p>
+            </div>
+          </div>
+          <p class="what">Drag-and-drop form builder. Intake forms, quizzes, and applications that post straight through to whatever you've got downstream.</p>
+          <p class="use"><b>What I use it for:</b> client intake and lead qualification. Every onboarding starts as a Jotform submission that Make picks up and files without me touching it.</p>
+          <div class="tool-foot">
+            <a class="btn" data-link="jotform" data-label="Build a form free">Build a form free</a>
+            <span class="tag"></span>
+          </div>
+        </article>
+
+        <article class="tool">
+          <div class="tool-top">
+            <div class="mark">FM</div>
+            <div>
+              <p class="tool-name">Fathom</p>
+              <p class="tool-kind">Call recording · Notes</p>
+            </div>
+          </div>
+          <p class="what">Records, transcribes, and summarizes your calls automatically. Nothing to run, nothing to take notes in, and a searchable record afterward.</p>
+          <p class="use"><b>What I use it for:</b> every sales call. I go back through the transcript to catch exactly what I committed to, which has saved me more than once.</p>
+          <div class="tool-foot">
+            <a class="btn" data-link="fathom" data-label="Try Fathom free">Try Fathom free</a>
+            <span class="tag"></span>
           </div>
         </article>
 
@@ -454,6 +492,18 @@
      can never be labelled "affiliate" unless it actually pays commission.
      A missing/empty url degrades to a non-clickable "coming soon" chip
      rather than shipping a dead button. */
+  /* Keep the headline's tool count honest without a manual edit — add or
+     remove a card and the number follows. Falls back to the hardcoded word
+     if the count ever runs past the list. */
+  (function () {
+    var el = document.getElementById("tool-count");
+    if (!el) { return; }
+    var words = ["", "One", "Two", "Three", "Four", "Five", "Six", "Seven",
+                 "Eight", "Nine", "Ten", "Eleven", "Twelve"];
+    var n = document.querySelectorAll(".tool").length;
+    if (words[n]) { el.textContent = words[n]; }
+  })();
+
   document.querySelectorAll("[data-link]").forEach(function (el) {
     var entry = LINKS[el.dataset.link] || {};
     var url = (entry.url || "").trim();
