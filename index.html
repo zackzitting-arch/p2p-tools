@@ -3,29 +3,41 @@
 <!--
   ============================================================
   EDIT ONLY THE LINKS BLOCK BELOW. Nothing else needs touching.
-  Paste each affiliate URL between the quotes as you get approved.
-  Leave a link as "" and the card automatically shows a muted
-  "Link coming soon" state instead of a dead link.
 
-  WHERE TO APPLY (your tracking link only exists once you're in):
-    ghl        40% recurring + 5% tier-2  → https://www.gohighlevel.com/joinaffiliate
-    make       35% for 12 months          → https://www.make.com/en/affiliate
-    gamma      via PartnerStack           → https://gammaapp.partnerstack.com/?group=affiliates
-    wispr      25% for 12 months (Dub)    → https://partners.dub.co/flow
-    namecheap  25-38% domains, 120d cookie→ https://www.namecheap.com/affiliates/
-    whop       DONE — link already live
-    claude     no cash affiliate program — see note in the card
+  Each entry has two fields:
+    url        where the button goes
+    affiliate  true  = pays commission. Card is tagged "Affiliate link"
+                       and the anchor gets rel="sponsored" (FTC + Google).
+               false = plain link, no commission. Card is tagged
+                       "Not an affiliate link" so the page never
+                       over-discloses.
+
+  WHEN A PROGRAM APPROVES YOU: paste the tracking URL over the plain
+  one and flip affiliate to true. Two edits, nothing else.
+
+  WHERE TO APPLY (each needs YOU — account creation, payout details,
+  and T&C acceptance are all steps an agent can't do for you):
+    ghl        40% recurring + 5% tier-2 → https://www.gohighlevel.com/joinaffiliate
+               gated behind 4 compliance steps + policy acceptance
+    make       35% for 12 months         → us2.make.com → avatar → Affiliate program
+               needs a Wise payout email + T&C agreement
+    gamma      30-50% via PartnerStack   → https://gammaapp.partnerstack.com/?group=affiliates
+               reviewed in 5-10 business days, start this one first
+    wispr      25% for 12 months via Dub → https://partners.dub.co/flow
+    namecheap  25-38% domains, 120d cookie → https://www.namecheap.com/affiliates/
+    whop       DONE — affiliate link already live
+    claude     no cash affiliate program exists
   ============================================================
 -->
 <script>
   const LINKS = {
-    whop:      "https://whop.com/network/?a=zackzz32",
-    ghl:       "",
-    make:      "",
-    gamma:     "",
-    wispr:     "",
-    namecheap: "",
-    claude:    "https://claude.com/product/claude-code"
+    whop:      { url: "https://whop.com/network/?a=zackzz32", affiliate: true  },
+    ghl:       { url: "https://www.gohighlevel.com/",         affiliate: false },
+    make:      { url: "https://www.make.com/",                affiliate: false },
+    gamma:     { url: "https://gamma.app/",                   affiliate: false },
+    wispr:     { url: "https://wisprflow.ai/",                affiliate: false },
+    namecheap: { url: "https://www.namecheap.com/",           affiliate: false },
+    claude:    { url: "https://claude.com/product/claude-code", affiliate: false }
   };
 </script>
 
@@ -415,10 +427,11 @@
         than going direct.
       </p>
       <p>
-        Every tool on this page is one I pay for and use in my own business. I have
-        turned down commissions on tools I don't run, and where a company
-        <strong>doesn't pay affiliates at all</strong> — like Claude — I've listed it
-        anyway and labeled it, because leaving it off would misrepresent the stack.
+        The rest are <strong>plain links</strong> that earn me nothing, and they're
+        labeled that way on the card. Every tool here is one I pay for and use in my
+        own business — the list is what I actually run, not what pays the most. Where
+        a company has no affiliate program at all, or I simply haven't joined one, the
+        tool stays on the page anyway. Leaving it off would misrepresent the stack.
       </p>
       <p>
         Nothing here is a promise of a result. These are tools, not outcomes. What
@@ -436,22 +449,34 @@
 </main>
 
 <script>
-  /* Wires each button to the LINKS block at the top of this file.
-     Empty string -> the button becomes a non-clickable "coming soon" chip,
-     so an unfinished affiliate application never ships a dead link. */
+  /* Wires each button to the LINKS block at the top of this file, and
+     derives the disclosure tag from the same source of truth — so a link
+     can never be labelled "affiliate" unless it actually pays commission.
+     A missing/empty url degrades to a non-clickable "coming soon" chip
+     rather than shipping a dead button. */
   document.querySelectorAll("[data-link]").forEach(function (el) {
-    var url = (LINKS[el.dataset.link] || "").trim();
-    if (url) {
-      el.setAttribute("href", url);
-      el.setAttribute("target", "_blank");
-      el.setAttribute("rel", "sponsored noopener noreferrer");
-    } else {
+    var entry = LINKS[el.dataset.link] || {};
+    var url = (entry.url || "").trim();
+    var tag = el.parentElement.querySelector(".tag");
+
+    if (!url) {
       el.classList.add("pending");
       el.classList.remove("ghost");
       el.textContent = "Link coming soon";
       el.setAttribute("aria-disabled", "true");
-      var tag = el.parentElement.querySelector(".tag");
       if (tag) { tag.textContent = "Applying to program"; tag.classList.remove("paid"); }
+      return;
+    }
+
+    el.setAttribute("href", url);
+    el.setAttribute("target", "_blank");
+    el.setAttribute("rel", entry.affiliate ? "sponsored noopener noreferrer" : "noopener noreferrer");
+
+    if (!entry.affiliate) { el.classList.add("ghost"); }
+
+    if (tag) {
+      tag.textContent = entry.affiliate ? "Affiliate link" : "Not an affiliate link";
+      tag.classList.toggle("paid", !!entry.affiliate);
     }
   });
 </script>
